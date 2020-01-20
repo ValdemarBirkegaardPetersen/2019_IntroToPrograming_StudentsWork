@@ -1,0 +1,82 @@
+ 
+Flower myFlower1;  // the first instance of the Flower class
+Flower myFlower2;
+Flower myFlower3;
+void setup() {
+  size(1600,1200);
+  
+  
+  int _r1 = 60;
+  int _petals = 7;
+  float _x = width/2;
+  float _y = height/2;
+  int _pc=#FFA000;
+  int yy = 300;
+  myFlower1 = new Flower(_r1,_petals,_x,_y,_pc,4);
+  myFlower2 = new Flower(_r1+40,_petals,_x,yy,_pc,8);
+  myFlower3 = new Flower(30,_petals+3,_x,900,_pc,5);
+
+}
+
+void draw(){
+  background(#43AF76);
+  myFlower1.display();
+  myFlower1.move();
+  myFlower1.bounce();
+  myFlower2.display();
+  myFlower2.move();
+  myFlower2.bounce();
+  myFlower3.display();
+  myFlower3.move();
+  myFlower3.bounce();
+}
+
+class Flower {
+  
+ // Variables
+ 
+ float r;       // radius of the flower petal
+ int n_petals;  // number of petals 
+ float x;       // x-position of the center of the flower
+ float y;       // y-position of the center of the flower
+ int petalColor;//hexadecimal number for the color of petals
+ float velocity;
+ 
+Flower(float temp_r, int temp_n_petals, float temp_x, float temp_y, int temp_petalColor,float temp_velocity) {
+  r=temp_r;
+  n_petals = temp_n_petals;
+  x=temp_x;
+  y=temp_y;
+  petalColor=temp_petalColor;
+  velocity = temp_velocity;
+}
+
+void display () {
+  
+  float ballX;
+  float ballY;
+  
+  fill(petalColor);
+  for (float i=0;i<PI*2;i+=2*PI/n_petals) {
+//  ballX=width/2 + r*cos(i);
+//  ballY=height/2 + r*sin(i);
+  ballX = x + r*cos(i);
+  ballY = y + r*sin(i);
+  ellipse(ballX,ballY,r,r); 
+  }
+  fill(200,0,0);
+  ellipse(x,y,r*1.2,r*1.2);
+}
+
+void move () {
+  x = x + velocity;
+}
+void bounce () {
+ if (x > width - r || x < r || y > height || y < 0) {
+  velocity = velocity *(-1);
+ }
+  
+}
+
+
+}
