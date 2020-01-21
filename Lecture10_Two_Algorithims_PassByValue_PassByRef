@@ -1,0 +1,71 @@
+int RPS = 70; 
+int [] x = new int [RPS]; // 1. Rectangle trail X
+int [] y = new int [RPS]; // 1. Rectangle trail Y
+
+int[] x1 = new int[RPS]; // 2. Ellipse trail X
+int[] y1 = new int[RPS]; // 2. Ellipse trail Y
+
+int sPos = 0; 
+int objectX = 600;
+int objectY = 400; 
+int vel = -5;
+int vel2 = 5;
+
+void setup () {
+  size(1000,1000);
+  
+}
+
+void draw () {
+  background(#524343);
+  
+  for (int i = RPS-1; i > 0;i--) {
+    x[i] = x[i-1];
+    y[i] = y[i-1];
+  }
+  
+  //Rektanglens bevæglse
+  objectX = objectX + vel;
+  objectY = objectY + vel;
+  
+  //Hvis rektanglen rammer væggene, send den samme vej tilbage.
+  if (objectX > width - RPS || objectX < 0) {
+    vel = vel * -1;
+  }
+  if (objectY > height - RPS || objectY< 0) {
+    vel = vel * -1;
+  }
+  
+  x[0] = objectX;
+  y[0] = objectY;
+  
+   for(int i = 0; i < RPS; i++){
+    
+    //fill(#12FFDD,77); 
+    fill(random(0,255),random(0,255),random(0,255));
+    //Rectangle trail - 
+    ellipse(x[i], y[i], i, i);
+  }
+  
+    fill(0,0,255);
+   
+    //Rektanglen følger objectX og objectY's bane. 
+    fill(random(0,255),random(0,255),random(0,255));
+    ellipse(objectX, objectY, 65,65);
+    
+    //Den første start position i arrayet er mouseX,mouseY
+    x1[sPos] = mouseX;
+    y1[sPos] = mouseY;
+    
+    //Buffer % igennem. 
+    sPos = (sPos + 1) % RPS;
+    
+    for(int i = 0; i < RPS; i++){
+     
+      //Tilfældige farver i trailen
+      fill(random(0,255),random(0,255),random(0,255));
+      int pos = (sPos + i) % RPS; //buffer
+      float radius = (RPS - i)/2.5;
+      ellipse(x1[pos], y1[pos], radius*2, radius*2);
+    }
+}
