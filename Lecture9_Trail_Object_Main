@@ -1,0 +1,15 @@
+Mover ballTrail;
+
+void setup () {
+  size(400,400);
+  // deklarerer ny objekt
+  ballTrail = new Mover ();
+}
+
+void draw () {
+  background(255);
+  //aktivere de forskellige metoder
+  ballTrail.display();
+  ballTrail.update();
+  
+} 
