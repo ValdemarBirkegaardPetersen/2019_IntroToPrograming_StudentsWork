@@ -1,0 +1,62 @@
+class Mover {
+  //Deklarer PVectors.
+  PVector mouseLoc;
+  PVector location;
+  PVector velocity;
+  PVector accel;
+  float mass; 
+  ArrayList<PVector > history; 
+  
+  Mover () {
+    
+    //constructor - giver nogle af vectorne values (x,y)
+    location = new PVector ();
+    velocity = new PVector (0,0);
+    accel = new PVector (0,0);
+    mass = random (1,6);
+    
+    //ny arraylist med pvector som type
+    history = new ArrayList<PVector>();
+  }
+  
+    //bliver ikke brugt. 
+  void applyForce(PVector force) {
+   
+    PVector f = PVector.div(force,mass);
+    accel.add(f);
+  }
+  //location er lig med mus position, cirkel bliver skabt.
+  void display () {
+    location.x = mouseX;
+    location.y = mouseY;
+    stroke(0);
+    fill(150);
+    ellipse(location.x,location.y,20*mass,20*mass);
+    
+    for (int i = 0; i < history.size();i++) {
+      PVector current = history.get(i); 
+      fill(255,100,100,i*20);
+      //trail bliver lavet sammen med opcaity fra fill.
+      ellipse(current.x,current.y,20*mass,20*mass);
+      
+    }
+    
+    
+    
+  }
+    
+  void update () {
+ 
+   //opdaterer arraylisten hele tiden. og sletter det sidste sted i arrayen.
+   PVector v = new PVector (location.x,location.y);
+   history.add(v);
+   
+   if (history.size() > 20) {
+    history.remove(0);
+   }
+  }
+    
+  
+ 
+    
+  }
